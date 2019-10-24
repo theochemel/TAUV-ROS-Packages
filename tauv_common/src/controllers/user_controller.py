@@ -20,8 +20,8 @@ import matplotlib.pyplot as plt
 
 class UserController:
     def __init__(self):
-        self.gain = [30, 30, 60, 20, 20, 8]      
-        rospy.init_node('user_controller', anonymous=True) 
+        self.gain = [30, 30, 60, 20, 20, 8]
+        rospy.init_node('user_controller', anonymous=True)
         self.pub = rospy.Publisher("/manta/thruster_manager/input", Wrench, queue_size=1)
         listener = keyboard.Listener(
             on_press=self.on_press,
@@ -29,7 +29,7 @@ class UserController:
         listener.start()
         self.keys = dict()
         self.vector = [0, 0, 0, 0, 0, 0]
-        
+
 
     def on_press(self, key):
         k = str(key)
@@ -71,7 +71,7 @@ class UserController:
         if self.is_pressed("e"):
             self.vector[3] = self.gain[3]
         if self.is_pressed("q"):
-            self.vector[3] = -self.gain[3]        
+            self.vector[3] = -self.gain[3]
 
     def send_thrust(self):
         command = self.vector
