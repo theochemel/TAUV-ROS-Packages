@@ -47,8 +47,8 @@ def template_matching(src, template):
             x = (pt[0]*int(2**(0.5*i)), pt[1]*int(2**(0.5*i)))
             y = (pt[0]*int(2**(0.5*i)) + w, pt[1]*int(2**(0.5*i)) + h)
             cv.rectangle(src, x,y, (255,0,0), 1)
-    cv.imshow("Matching Result", result)
-    cv.imshow("Detected Image", thresh1)
+    #cv.imshow("Matching Result", result)
+    cv.imshow("Detected Image", img)
 
 template = cv.imread('/home/matthew/tartan_ws/src/TAUV-ROS-Packages/tauv_mission/src/tasks/rod_img_small.png')
 print(np.shape(template))
@@ -90,22 +90,15 @@ class QualRunner:
             self.image_array.append(cv_image)
             if len(self.image_array) >= self.image_count:
                 image = self.image_array[0].astype(np.int32)
-               # print(image[0, 0, 0])
                 for i in range(1, len(self.image_array)):
-                #    print("Adding: " + str(image[0, 0, 0]))
-                #    print("To this: " + str(self.image_array[i][0,0,0]))
                     image = np.add(image, self.image_array[i])
-                #    print("Result: " + str(image[0,0,0]))
                 
-                #print(len(self.image_array))
                 image = (image / len(self.image_array)).astype(np.uint8)
-                #print(image[0, 0, 0])
                 self.image_array = []
 
                 cv.imshow('image', image)
                 cv.waitKey(10)
                 template_matching(image, template)
-                #print(image.shape)
         except CvBridgeError as e:
             print(e)
 
@@ -154,7 +147,19 @@ class QualRunner:
         self.send_input()
         time.sleep(0.01)
 
+def test_video():
+    vidcap = cv2.VideoCapture('/home/matthew/tartan_ws/src/TAUV-ROS-Packages/tauv_mission/src/tasks/left_log10.avi')
+    success,image = vidcap.read()
+    print(success)
+    count = 0
+    while success:
+        template_matching(image, template)
+        cv.waitKey(10)
+        success,image = vidcap.read()
+        count += 1
+
 def main():
-    qr = QualRunner()
-    while(not rospy.is_shutdown()):
-        qr.spin()
+    test_video()
+    # qr = QualRunner()
+    # while(not rospy.is_shutdown()):
+    #     qr.spin()
