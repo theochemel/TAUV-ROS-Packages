@@ -1,0 +1,69 @@
+
+output_states:
+  - arm
+  - allow_start
+  -
+
+exception_types:
+  - sensor_exception
+  - actuator_exception
+  - mission_exception
+  - core_exception
+
+runtime_severities:
+  - system_failure:
+      priority: 0
+      disarm: true
+
+  - no_failure:
+      priority: 100
+      disarm: false
+
+
+startup_severities:
+  - fail_terminal:
+      priority: 0
+      terminal: true
+      prevent_start: true
+
+  - prevent_start:
+      priority: 1
+      terminal: false
+      prevent_start: true
+
+  - no_failure:
+      priority: 100
+      terminal: false
+      prevent_start: false
+
+
+
+exceptions:
+  - imu_not_initialized:
+      type: sensor_exception
+      default_set: true
+      runtime_severity: no_failure
+      startup_severity: prevent_start
+
+  - buoy_detection_timeout:
+      type: mission_exception
+      default_set: false
+      runtime_severity: task_failure
+      startup_severity: no_failure
+
+  - camera_not_publishing:
+      type: sensor_exception
+      default_set: true
+      runtime_severity: pause_mission
+      startup_severity: prevent_start
+
+  - imu_failed_to_initialize:
+      type: sensor_exception
+
+
+
+
+
+
+
+
