@@ -35,4 +35,6 @@
   <exec_depend>tauv_config</exec_depend>
   <exec_depend>message_filters</exec_depend>
 
+  <depend>pynput-pip</depend>
+
 </package>
