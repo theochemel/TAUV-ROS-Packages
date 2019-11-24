@@ -67,6 +67,7 @@ def stability_control():
             # publish to rospid node for pitch
             p_base = tf_sub.transformPose("albatross/base_stabilized", p_data)
             p_base_pitch = std_msgs.msg.Float64()
+
             p_base_pitch.data = p_base.pose.orientation.y
             pid_pub.publish(p_base_pitch)
 
