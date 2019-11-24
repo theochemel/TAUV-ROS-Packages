@@ -1,0 +1,10 @@
+Kp: 3.0
+Ki: 0.0
+Kd: 0.3
+upper_limit: 100
+lower_limit: -100
+windup_limit: 100
+max_loop_frequency: 100.0
+min_loop_frequency: 100.0
+setpoint: 10.0
+topic_from_controller: /pid_output

@@ -1,0 +1,10 @@
+<launch>
+
+    <node name="pitch_pid" pkg="pid" type="controller" >
+        <rosparam command="load" file="$(find tauv_common)/src/controllers/config/pid_constants.yaml" />
+    </node>
+
+    <node name="stability_node" pkg="tauv_common" type="stability_control" >
+    </node>
+
+</launch>
